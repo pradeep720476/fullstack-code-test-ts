@@ -12,7 +12,7 @@ const LoadingPage = () => {
     return () => clearTimeout(timer);
   }, []);
 
-  return <PingLoader/>;
+  return <PingLoader />;
 };
 
 export default LoadingPage;
