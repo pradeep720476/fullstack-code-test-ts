@@ -36,23 +36,54 @@ Before submitting your result please make sure that:
 
 # Solution And Tools which i used to solve this are below
 
- ## Depedency Manager
+ 
+
+---
+
+## Table of Contents
+- [Installation](#installation)
+- [Technology Stack](#technology-stack)
+
+## Installation
+
+To get started, follow the steps below to install and set up the project.
+
+### Prerequisites
+
+- Node.js (v20 or higher recommended)
+- Yarn package manager
+
+### Steps
+
+1. **Clone the repository:**
+
+   ```bash
+   git clone https://github.com/pradeep720476/fullstack-code-test-ts
+
+   cd fullstack-code-test-ts
+
+2. **Run Below Command:**
+    ```bash
+    yarn install;
+    yarn start;
+
+
+## Technology-stack
+
+### Depedency Manager
     - yarn
 
- ## Dev Tools
+### Dev Tools
     - React dev Tools
     - Redux Extensions
     - Preitter Extensions
 
- ## External Library
+### External Library
     - Material UI
     - Axios
     - Redux Tool Kit
     - Redux
 
-##  Code Formatter Library
+###  Code Formatter Library
     - Preitter
     - ESlint
-##  
-
-
