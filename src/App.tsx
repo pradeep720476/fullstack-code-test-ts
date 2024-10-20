@@ -1,10 +1,11 @@
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
-import LoadingPage from './pages/LoadingPage';
-import UsersPage from './pages/UsersPage';
 import { Box, createTheme, ThemeProvider } from '@mui/material';
 import Header from './components/Header/Header';
 import { useState } from 'react';
-import UserDetail from './pages/UserDetailPage';
+import React from 'react';
+import LoadingPage from './pages/Loader/LoadingPage';
+import UserDetail from './pages/UserDetail/UserDetailPage';
+import UsersPage from './pages/Users/UsersPage';
 
 const App = () => {
   const [darkMode, setDarkMode] = useState(false);

@@ -1,7 +1,7 @@
-import axios from 'axios';
-import { buildQueryParam, url } from '../utils/serviceHelper';
-import { API_RESOUCE } from '../utils/constant';
-import api from './api';
+import axios from "axios";
+import { buildQueryParam, url } from "../utils/serviceHelper";
+import { API_RESOUCE } from "../utils/constant";
+import api from "./api";
 
 export const getUsers = async (queryParam: Record<string, any>) => {
   const query = buildQueryParam(queryParam);
@@ -13,7 +13,7 @@ export const getUsers = async (queryParam: Record<string, any>) => {
   }
 };
 
-export const getUser = async (id: string) => {
+export const getUser = async (id: number) => {
   try {
     const response = await axios.get(`${url(API_RESOUCE.user)}/${id}`);
     return response.data;

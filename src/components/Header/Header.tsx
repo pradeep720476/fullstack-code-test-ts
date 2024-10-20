@@ -8,6 +8,7 @@ import {
   Toolbar,
   Typography,
 } from '@mui/material';
+import React from 'react';
 
 interface HeaderProps {
   title: string;

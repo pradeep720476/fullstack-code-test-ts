@@ -4,21 +4,21 @@ import { useParams } from 'react-router-dom';
 import PingLoader from '../../components/PingLoader/PingLoader';
 import UserCard from '../../components/UserCard/UserCard';
 import { useAppDispatch, useAppSelector } from '../../hooks/hooks';
-import { getUserThunk, selectorUserData } from '../../store/slices/usersSlcie';
+import { getUserThunk, selectorUserData } from '../../store/slices/usersSlice';
+import React from 'react';
 
 const UserDetail = () => {
   const { id } = useParams();
   const { loading, currentUser } = useAppSelector(selectorUserData);
   const dispatch = useAppDispatch();
-  console.log(id);
 
-  const getUser = async (id: string) => {
+  const getUser = async (id: number) => {
     if (loading) return;
     dispatch(getUserThunk(id));
   };
 
   useEffect(() => {
-    getUser(id);
+    getUser(Number(id));
   }, []);
 
   if (loading || !currentUser) {

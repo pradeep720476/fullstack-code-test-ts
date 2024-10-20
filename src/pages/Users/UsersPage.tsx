@@ -2,8 +2,9 @@ import { Typography, CircularProgress, Box } from '@mui/material';
 import UserCard from '../../components/UserCard/UserCard';
 import { useCallback, useEffect, useRef } from 'react';
 import { useAppDispatch, useAppSelector } from '../../hooks/hooks';
-import { getUsersThunk, selectorUserData } from '../../store/slices/usersSlcie';
+import { getUsersThunk, selectorUserData } from '../../store/slices/usersSlice';
 import { Page } from '../../utils/constant';
+import React from 'react';
 
 const UsersPage = () => {
   const { users, page, loading, hasMore } = useAppSelector(selectorUserData);
@@ -11,7 +12,6 @@ const UsersPage = () => {
   const scrollRef = useRef<HTMLDivElement | null>(null);
 
   const getUsers = async (currentPage: number) => {
-    console.log(currentPage);
     if (loading || !hasMore) return;
     dispatch(getUsersThunk({ page: currentPage, per_page: Page.pageSize }));
   };

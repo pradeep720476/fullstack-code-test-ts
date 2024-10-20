@@ -4,6 +4,7 @@ import configureStore from 'redux-mock-store';
 import thunk from 'redux-thunk';
 import UsersPage from './UsersPage';
 import { render, screen } from '@testing-library/react';
+import React from 'react';
 
 jest.mock('axios'); // Mock the entire Axios library
 
@@ -34,7 +35,6 @@ describe('UsersPage Component', () => {
   afterEach(() => {
     jest.clearAllMocks(); // Ensure all mocks are cleared after each test
   });
-
 
   test.only('displays user cards when users are present', () => {
     const updatedState = {

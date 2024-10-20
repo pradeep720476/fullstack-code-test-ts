@@ -1,6 +1,7 @@
-import { useEffect, useState } from 'react';
+import { useEffect } from 'react';
 import PingLoader from '../../components/PingLoader/PingLoader';
 import { useNavigate } from 'react-router-dom';
+import React from 'react';
 
 const LoadingPage = () => {
   const navigate = useNavigate();

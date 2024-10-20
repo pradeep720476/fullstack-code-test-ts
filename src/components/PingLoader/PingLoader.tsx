@@ -1,5 +1,6 @@
 import { Box, BoxProps } from '@mui/material';
 import { styled } from '@mui/system';
+import React from 'react';
 
 const PingContainer = styled('div')({
   position: 'absolute',
