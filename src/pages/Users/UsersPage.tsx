@@ -27,7 +27,7 @@ const UsersPage = () => {
   }, [getUsers]);
 
   /**
-   * Throttle the handleScroll for limited time
+   * Throttle the handleScroll to avoid uncessary call to api
    * @returns
    */
   const throttle = (func: Function, limit: number) => {
@@ -50,9 +50,7 @@ const UsersPage = () => {
     };
   };
 
-  /**
-   * Throttle Scroll callback to avoid uncessary re-render
-   */
+  
   const throttleHandleScroll = useCallback(throttle(handleScroll, 200), [
     handleScroll,
   ]);

@@ -1,5 +1,5 @@
-import { Person } from '@mui/icons-material';
 import { Card, CardContent, Typography, CardMedia, Box } from '@mui/material';
+import React from 'react';
 import { useNavigate } from 'react-router-dom';
 
 const UserCard = ({ user }) => {
