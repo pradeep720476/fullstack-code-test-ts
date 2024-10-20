@@ -1,13 +1,9 @@
-import {
-  createAsyncThunk,
-  createSlice,
-  PayloadAction,
-} from "@reduxjs/toolkit";
-import { User } from "../../types/user.types";
-import { getUser, getUsers } from "../../services/userService";
-import { Page } from "../../utils/constant";
-import { createSelector } from "reselect";
-import { RootState } from "../store";
+import { createAsyncThunk, createSlice, PayloadAction } from '@reduxjs/toolkit';
+import { User } from '../../types/user.types';
+import { getUser, getUsers } from '../../services/userService';
+import { Page } from '../../utils/constant';
+import { createSelector } from 'reselect';
+import { RootState } from '../store';
 
 export interface UserState {
   users: User[];
@@ -28,7 +24,7 @@ const initialState: UserState = {
 };
 
 export const userSlice = createSlice({
-  name: "users",
+  name: 'users',
   initialState,
   reducers: {},
   extraReducers: (builder) => {
@@ -56,7 +52,7 @@ export const userSlice = createSlice({
       })
       .addCase(getUsersThunk.pending, (state) => {
         state.loading = true;
-        state.error = "";
+        state.error = '';
       })
       .addCase(getUserThunk.fulfilled, (state, action) => {
         state.loading = false;
@@ -82,21 +78,21 @@ export const selectorUserData = createSelector(
     hasMore: userState.hasMore,
     page: userState.page,
     currentUser: userState.currentUser,
-  }),
+  })
 );
 
 export const getUsersThunk = createAsyncThunk(
-  "users/getUsers",
+  'users/getUsers',
   async (queryParam: Record<string, any>) => {
     return await getUsers(queryParam);
-  },
+  }
 );
 
 export const getUserThunk = createAsyncThunk(
-  "/users/getUser",
+  '/users/getUser',
   async (id: string) => {
     return await getUser(id);
-  },
+  }
 );
 
 export default userSlice.reducer;

@@ -30,17 +30,14 @@ Before submitting your result please make sure that:
 - The application resembles what is visible on screenshots in the design folder
 - The application meets criteria listed above in common desktop and mobile browsers
 
-
 ---
 
-
 # Solution And Tools which i used to solve this are below
-
- 
 
 ---
 
 ## Table of Contents
+
 - [Installation](#installation)
 - [Technology Stack](#technology-stack)
 
@@ -62,28 +59,34 @@ To get started, follow the steps below to install and set up the project.
 
    cd fullstack-code-test-ts
 
-2. **Run Below Command:**
-    ```bash
-    yarn install;
-    yarn start;
+   ```
 
+2. **Run Below Command:**
+   ```bash
+   yarn install;
+   yarn start;
+   ```
 
 ## Technology-stack
 
 ### Depedency Manager
+
     - yarn
 
 ### Dev Tools
+
     - React dev Tools
     - Redux Extensions
     - Preitter Extensions
 
 ### External Library
+
     - Material UI
     - Axios
     - Redux Tool Kit
     - Redux
 
-###  Code Formatter Library
+### Code Formatter Library
+
     - Preitter
     - ESlint

@@ -1,8 +1,8 @@
 export const API_RESOUCE = {
-    users: '/api/users',
-    user: '/api/users'
-}
+  users: '/api/users',
+  user: '/api/users',
+};
 
 export const Page = {
-    pageSize: 4
-}
+  pageSize: 4,
+};
