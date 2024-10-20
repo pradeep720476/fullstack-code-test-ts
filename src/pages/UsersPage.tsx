@@ -1,56 +1,32 @@
-import {
-    Typography,
-    CircularProgress,
-    Box,
-} from '@mui/material';
+import { Typography, CircularProgress, Box } from '@mui/material';
 import UserCard from '../components/UserCard/UserCard';
-import { useCallback, useEffect, useRef, useState } from 'react';
+import { useCallback, useEffect, useRef } from 'react';
+import { useAppDispatch, useAppSelector } from '../hooks/hooks';
+import { getUsersThunk, selectorUserData } from '../store/slices/usersSlcie';
+import { Page } from '../utils/constant';
 
 const UsersPage = () => {
-    const [users, setUsers] = useState([]);
-    const [loading, setLoading] = useState(false);
-    const [hasMore, setHasMore] = useState(true);
-    const [page, setPage] = useState(1); // State to manage the current page
-    const perPage = 4;
+    const { users, page, loading, error, hasMore } = useAppSelector(selectorUserData);
+    const dispatch = useAppDispatch();
     const scrollRef = useRef<HTMLDivElement | null>(null);
 
-    const fetchUsers = async (page: number) => {
-        if (loading || !hasMore) return; // Prevent fetching if already loading or no more users
-        setLoading(true);
-        try {
-            const response: Response = await fetch(
-                `https://reqres.in/api/users?page=${page}&per_page=${perPage}`
-            );
-            let results = await response.json();
-            setUsers((prev) => {
-                const existid = new Set(prev.map(user => user.id));
-                return [...prev, ...results.data.filter((newuser: { id: any; }) => !existid.has(newuser.id))]
-            });
-            setLoading(false);
-
-            // Set hasMore to false if there are no more users
-            if (results.data.length < perPage) {
-                setHasMore(false);
-            }
-        } finally {
-            setLoading(false);
-        }
-
+    const getUsers = async (currentPage: number) => {
+        console.log(currentPage);
+        if (loading || !hasMore) return;
+        dispatch(getUsersThunk({ page: currentPage, per_page: Page.pageSize }));
     };
 
-    const handleScroll = useCallback(() => {
+
+
+    const handleScroll = useCallback(async () => {
         if (scrollRef?.current) {
             const { scrollTop, scrollHeight, clientHeight } = scrollRef.current;
             if (scrollTop + clientHeight >= scrollHeight - 10) {
                 console.log('....loading more');
-                setPage((prev) => {
-                    const next = prev + 1;
-                    fetchUsers(next);
-                    return next;
-                });
+                await getUsers(page);
             }
         }
-    }, [scrollRef, loading, hasMore]);
+    }, [getUsers]);
 
     /**
      * Throttle the handleScroll for limited time
@@ -66,15 +42,12 @@ const UsersPage = () => {
                 lastRun = Date.now();
             } else {
                 clearTimeout(lastFunc);
-                lastFunc = setTimeout(
-                    () => {
-                        if (Date.now() - lastRun >= limit) {
-                            func.apply(lexical, args);
-                            lastRun = Date.now();
-                        }
-                    },
-                    limit
-                );
+                lastFunc = setTimeout(() => {
+                    if (Date.now() - lastRun >= limit) {
+                        func.apply(lexical, args);
+                        lastRun = Date.now();
+                    }
+                }, limit);
             }
         };
     };
@@ -82,18 +55,18 @@ const UsersPage = () => {
     /**
      * Throttle Scroll callback to avoid uncessary re-render
      */
-    const throttleHandleScroll = useCallback(throttle(handleScroll, 300), [
+    const throttleHandleScroll = useCallback(throttle(handleScroll, 200), [
         handleScroll,
     ]);
 
     useEffect(() => {
-        fetchUsers(page);
-    }, [page]);
+        getUsers(page);
+    }, []);
 
     useEffect(() => {
         const innerRef = scrollRef?.current;
-        if (innerRef) innerRef.addEventListener('scroll', handleScroll);
-        return () => innerRef?.removeEventListener('scroll', handleScroll);
+        if (innerRef) innerRef.addEventListener('scroll', throttleHandleScroll);
+        return () => innerRef?.removeEventListener('scroll', throttleHandleScroll);
     }, [throttleHandleScroll]);
 
     return (
@@ -109,14 +82,19 @@ const UsersPage = () => {
                 textAlign: 'center',
             }}
         >
-
             {users.map((user, index) => (
-                <Box key={index} display="flex" justifyContent="center" alignItems="center" margin="1rem"><UserCard user={user} /></Box>
+                <Box
+                    key={index}
+                    display="flex"
+                    justifyContent="center"
+                    alignItems="center"
+                    margin="1rem"
+                >
+                    <UserCard user={user} />
+                </Box>
             ))}
             {loading && <CircularProgress sx={{ color: '#7FB800' }} />}
-            {!hasMore && !loading && (
-                <Typography>No more users to load.</Typography>
-            )}
+            {!hasMore && !loading && <Typography>No more users to load.</Typography>}
         </Box>
     );
 };

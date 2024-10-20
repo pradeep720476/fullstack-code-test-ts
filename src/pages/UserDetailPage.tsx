@@ -1,39 +1,41 @@
-import { Box, CircularProgress, Typography } from "@mui/material"
-import { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
-import PingLoader from "../components/PingLoader/PingLoader";
-
+import { Box } from '@mui/material';
+import { useEffect, useState } from 'react';
+import { useParams } from 'react-router-dom';
+import PingLoader from '../components/PingLoader/PingLoader';
+import UserCard from '../components/UserCard/UserCard';
+import { useAppDispatch, useAppSelector } from '../hooks/hooks';
+import { getUserThunk, selectorUserData } from '../store/slices/usersSlcie';
 
 const UserDetail = () => {
     const { id } = useParams();
-    const [user, setUser] = useState<any>({});
-    const [loading, setLoading] = useState(true);
+    const { loading, currentUser } = useAppSelector(selectorUserData);
+    const dispatch = useAppDispatch();
+    console.log(id);
 
-    const fetchUser = async () => {
-        try {
-            const response = await fetch(`https://reqres.in/api/users/${id}`); // Fetch user details by ID
-            const userData = await response.json();
-            console.log(userData.data);
-            setUser(userData.data);
-        } catch (error) {
-            console.error('Failed to fetch user:', error);
-        } finally {
-            setLoading(false);
-        }
+    const getUser = async (id: string) => {
+        if (loading) return;
+        dispatch(getUserThunk(id));
     };
 
     useEffect(() => {
-        fetchUser();
-    }, [id]);
+        getUser(id);
+    }, []);
 
-    if (loading) {
+    if (loading || !currentUser) {
         return <PingLoader />;
     }
 
-    return <Box>
-        <div>{user?.email}</div>
-        <div>Screen</div>
-    </Box>
-}
+    return (
+        <Box
+            height="100vh"
+            display="flex"
+            justifyContent="center"
+            alignItems="center"
+            margin="1rem"
+        >
+            <UserCard user={currentUser}></UserCard>
+        </Box>
+    );
+};
 
 export default UserDetail;
